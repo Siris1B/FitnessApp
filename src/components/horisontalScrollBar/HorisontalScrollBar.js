@@ -6,4 +6,5 @@ function HorisontalScrollBar() {
   )
 }
 
+
 export default HorisontalScrollBar
