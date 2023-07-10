@@ -1,0 +1,41 @@
+.herobanner {
+    margin-top: 202px;
+    min-height: 600px;
+    padding: 0 30px;
+    position: relative;
+    &__theme {
+        color: #ff2625;
+        font-size: 26px;
+        font-weight: 700;
+    }
+    &__tagline {
+        font-size: 44px;
+        font-weight: 700;
+        margin-top: 25px;
+    }
+    &__callToAction {
+        margin-top: 25px;
+        font-size: 20px;
+        line-height: 30px;
+        max-width: 400px;
+        margin-bottom: 25px;
+    }
+    &__img {
+        border-bottom-left-radius: 150px;
+        height: 900px;
+        width: 700px;
+        z-index: 10;
+        position: absolute;
+        right: 40px;
+        top: -285px;
+    }
+    &__p-last {
+        margin: 0;
+        bottom: -60px;
+        color: #ff2625;
+        font-size: 200px;
+        font-weight: 600;
+        opacity: .1;
+        position: absolute;
+    }
+}
