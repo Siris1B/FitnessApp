@@ -1,6 +1,22 @@
+import { useState, useEffect } from 'react';
+
+import useFitnessService from '../../service/FitnessService';
+
+import HorisontalScrollBar from '../horisontalScrollBar/HorisontalScrollBar';
+
 import './searchExercises.scss';
 
-const SearchExercises = () => {
+const SearchExercises = (props) => {
+  const {bodyPart, setBodyPart} = props;
+  const {loading, error, getBodyParts} = useFitnessService();
+  const [bodyParts, setBodyParts] = useState([]);
+
+  useEffect(() => {
+    getBodyParts()
+      .then(setBodyParts)
+  }, [])
+
+
   return (
     <div className="searchExercises">
         <p className="searchExercises__tagline">
@@ -14,7 +30,9 @@ const SearchExercises = () => {
             <button className="searchExercises__button button">
                 Search 
             </button>
-            
+            <HorisontalScrollBar bodyPart={bodyPart}
+                                 bodyParts={bodyParts}
+                                 setBodyPart={setBodyPart} />
         </div>
     </div>
 
