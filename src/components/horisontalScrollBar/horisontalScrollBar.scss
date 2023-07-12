@@ -1,7 +1,10 @@
 .horisontalScrollBar {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    margin-top: 72px;
     &__item {
+        margin: 10px;
         cursor: pointer;
         transition: all .3s ease-in-out;
         &:hover {

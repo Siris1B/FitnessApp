@@ -1,0 +1,61 @@
+.exercisesCard {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    border-top: 4px solid #ff2625;
+    background: #fff;
+
+    height: 445px;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    text-decoration: none;
+    width: 400px;
+    margin: 25px;
+    transition: all .9s ease;
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+
+.exerciseCard { 
+
+    &__body {
+        text-decoration: none;
+
+    }
+    &__buttons {
+        display: flex;
+    }
+    &__exerciseName {
+        color: #000;
+        font-size: 22px;
+        font-weight: 700;
+        margin-top: 15px;
+        text-align: center;
+        text-transform: capitalize
+    }
+    &__niceButton {
+        border-radius: 20px;
+        margin-left: 21px;
+        padding: 12px;
+        color: #fff;
+        font-size: 12px;
+        text-transform: capitalize;
+    }
+    &__niceButton:first-child {
+        background: #ffa9a9;
+        &:hover {
+            background: #fa7474;
+        } 
+    }
+    &__niceButton:last-child {
+        background: #fcc757;
+        &:hover {
+            background: #f9b72a;
+        } 
+    }
+    &__img {
+        max-height: 320px;
+        width: 100%;
+    }
+}

@@ -7,13 +7,18 @@ import HorisontalScrollBar from '../horisontalScrollBar/HorisontalScrollBar';
 import './searchExercises.scss';
 
 const SearchExercises = (props) => {
-  const {bodyPart, setBodyPart} = props;
-  const {loading, error, getBodyParts} = useFitnessService();
+  const {bodyPart, setBodyPart, setExercises} = props;
+  const {loading, error, getBodyParts, getExercises} = useFitnessService();
   const [bodyParts, setBodyParts] = useState([]);
 
   useEffect(() => {
     getBodyParts()
       .then(setBodyParts)
+  }, [])
+
+  useEffect(() => {
+    getExercises()
+      .then(setExercises)
   }, [])
 
 
@@ -30,10 +35,10 @@ const SearchExercises = (props) => {
             <button className="searchExercises__button button">
                 Search 
             </button>
-            <HorisontalScrollBar bodyPart={bodyPart}
+        </div>
+        <HorisontalScrollBar bodyPart={bodyPart}
                                  bodyParts={bodyParts}
                                  setBodyPart={setBodyPart} />
-        </div>
     </div>
 
   )

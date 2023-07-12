@@ -21,12 +21,12 @@ const useFitnessService = () => {
         return res;
     }
 
-    // const getExercises = async (additional) => {
-    //     const res = await this.fetchData(`${_url}${additional}`, _exercisesOptions)
-    //     return res;
-    // }
+    const getExercises = async (additional = '') => {
+        const res = await request(`${_url}${additional}`, _exercisesHeaders)
+        return res;
+    }
 
-    return {loading, error, getBodyParts, clearError};
+    return {loading, error, getBodyParts, getExercises, clearError};
 }
 
 export default useFitnessService
