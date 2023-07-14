@@ -9,7 +9,7 @@ const BodyPart = (props) => {
   return (
     <button className={newClass}
             onClick={() => {
-              this.props.setBodyPart(this.props.item)
+              setBodyPart(item)
             }}>
             {/* window.scrollTo({top: 2000, left: 100, behavior: 'smooth'}) */}
             <img src={gym} alt={item} className="bodyPart__img" />

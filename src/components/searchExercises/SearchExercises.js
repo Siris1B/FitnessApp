@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 
 import useFitnessService from '../../service/FitnessService';
-
 import HorisontalScrollBar from '../horisontalScrollBar/HorisontalScrollBar';
+import Spinner from '../spinner/Spinner';
 
 import './searchExercises.scss';
 
@@ -10,16 +10,39 @@ const SearchExercises = (props) => {
   const {bodyPart, setBodyPart, setExercises} = props;
   const {loading, error, getBodyParts, getExercises} = useFitnessService();
   const [bodyParts, setBodyParts] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
     getBodyParts()
       .then(setBodyParts)
-  }, [])
-
-  useEffect(() => {
+    
     getExercises()
       .then(setExercises)
   }, [])
+
+  useEffect(() => {
+    if (bodyPart != 'all') {
+      onRequest(`/bodyPart/${bodyPart}`)
+    }
+  }, [bodyPart])
+
+  const onRequest = async (additional = null) => {
+    const result = await getExercises(additional)
+
+    const searchedExercises = result.filter((exercise) => {
+      return exercise.bodyPart.toLowerCase().includes(searchValue) ||
+             exercise.target.toLowerCase().includes(searchValue) ||  
+             exercise.name.toLowerCase().includes(searchValue) ||
+             exercise.equipment.toLowerCase().includes(searchValue);
+    });
+
+    setExercises(searchedExercises);
+    setSearchValue('');
+  }
+
+  const onValueChange = (text) => {
+    setSearchValue(text)
+  }
 
 
   return (
@@ -28,17 +51,23 @@ const SearchExercises = (props) => {
             Awesome Exercises You<br/>Should Know
         </p>
         <div className="searchExercises__search">
-            <input type="text" 
+            <input type="text"
+                    name="searchValue"
                     className="searchExercises__input"
-                    placeholder="Search Exercises" 
+                    placeholder="Search Exercises"
+                    onChange={(e) => {onValueChange(e.target.value.toLowerCase())}}
+                    value={searchValue}
             />
-            <button className="searchExercises__button button">
+            <button className="searchExercises__button button"
+                    onClick={onRequest}>
                 Search 
             </button>
         </div>
-        <HorisontalScrollBar bodyPart={bodyPart}
-                                 bodyParts={bodyParts}
-                                 setBodyPart={setBodyPart} />
+        {
+          <HorisontalScrollBar bodyPart={bodyPart}
+                               bodyParts={bodyParts}
+                               setBodyPart={setBodyPart} />
+        }
     </div>
 
   )

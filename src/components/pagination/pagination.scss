@@ -1,0 +1,22 @@
+.pagination {
+    margin-top: 50px;
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    &__button {
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        border: none;
+        margin: 5px;
+        transition: all .3s ease-in-out;
+        &:hover {
+            color: #ff25254f;
+        }
+    }
+    &_active {
+        background-color:  #ff25254f;
+    }
+}

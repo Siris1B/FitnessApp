@@ -1,13 +1,15 @@
 import ExercisesCard from "../exercisesCard/ExercisesCard";
+import Spinner from "../spinner/Spinner";
 
 import './exercises.scss';
 
 const Exercises = (props) => {
   const {exercises} = props;
 
-  const content = exercises.map((exercise) => {
+  const content =   exercises.map((exercise) => {
     return <ExercisesCard key={exercise.id} exercise={exercise}/>
   })
+
     return (
     <div className="exercises">
         <p className="exercises__results">
