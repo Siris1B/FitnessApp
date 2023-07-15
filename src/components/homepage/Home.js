@@ -9,14 +9,15 @@ import Pagination from '../pagination/Pagination';
 const HomePage = () => {
   const [bodyPart, setBodyPart] = useState('all');
   const [exercises, setExercises] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [exercisesPerPage, setExercisesPerPage] = useState(9);
 
-  useEffect(() => {setCurrentPage(1)}, [exercises])
+  const [currentPage, setCurrentPage] = useState(1); //
+  const [exercisesPerPage, setExercisesPerPage] = useState(9); //
 
-  const lastExerciseIndex = currentPage * exercisesPerPage;
-  const firstExerciseIndex = lastExerciseIndex - exercisesPerPage;
-  const currentExercises = exercises.slice(firstExerciseIndex, lastExerciseIndex);
+  useEffect(() => {setCurrentPage(1)}, [exercises]) //
+
+  const lastExerciseIndex = currentPage * exercisesPerPage; //
+  const firstExerciseIndex = lastExerciseIndex - exercisesPerPage; //
+  const currentExercises = exercises.slice(firstExerciseIndex, lastExerciseIndex); //
 
   return (
     <>
@@ -25,11 +26,15 @@ const HomePage = () => {
                          setBodyPart={setBodyPart}
                          setExercises={setExercises} 
         />
-        <Exercises exercises={currentExercises}/> 
+        <Exercises exercises={currentExercises}
+                   bodyPart={bodyPart}
+                   setExercises={setExercises} 
+        />           
         <Pagination totalExercises={exercises.length}
                     exercisesPerPage={exercisesPerPage}
                     setCurrentPage={setCurrentPage}
-                    currentPage={currentPage}/>
+                    currentPage={currentPage}
+        /> 
     </>
   )
 }

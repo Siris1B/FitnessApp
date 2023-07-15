@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 import useFitnessService from '../../service/FitnessService';
 import HorisontalScrollBar from '../horisontalScrollBar/HorisontalScrollBar';
+import ErrorMessage from '../errorMessage/ErrorMessage';
 import Spinner from '../spinner/Spinner';
 
 import './searchExercises.scss';
@@ -20,14 +21,8 @@ const SearchExercises = (props) => {
       .then(setExercises)
   }, [])
 
-  useEffect(() => {
-    if (bodyPart != 'all') {
-      onRequest(`/bodyPart/${bodyPart}`)
-    }
-  }, [bodyPart])
-
-  const onRequest = async (additional = null) => {
-    const result = await getExercises(additional)
+  const onRequest = async () => {
+    const result = await getExercises()
 
     const searchedExercises = result.filter((exercise) => {
       return exercise.bodyPart.toLowerCase().includes(searchValue) ||
@@ -59,12 +54,13 @@ const SearchExercises = (props) => {
                     value={searchValue}
             />
             <button className="searchExercises__button button"
-                    onClick={onRequest}>
+                    onClick={onRequest}
+            >
                 Search 
             </button>
         </div>
         {
-          <HorisontalScrollBar bodyPart={bodyPart}
+          loading ? <Spinner/> : <HorisontalScrollBar bodyPart={bodyPart}
                                bodyParts={bodyParts}
                                setBodyPart={setBodyPart} />
         }
