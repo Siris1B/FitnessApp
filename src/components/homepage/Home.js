@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 
-import useFitnessService from '../../service/FitnessService';
 import HeroBanner from "../herobanner/HeroBanner"
 import SearchExercises from "../searchExercises/SearchExercises"
 import Exercises from '../exercises/Exercises';

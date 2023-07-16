@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import logo from '../../resources/images/Logo.png';
 
 import './navBar.scss';
@@ -5,12 +7,12 @@ import './navBar.scss';
 const NavBar = () => {
   return (
     <nav className='navbar'>
-        <a href="#" className="navbar__logo">
+        <Link to='/' className="navbar__logo">
             <img src={logo} alt="#" className="navbar__logo__img"/>
-        </a>
+        </Link>
         <div className="navbar__category">
-            <a href="#" className="navbar__home">Home</a>
-            <a href="#" className="navbar__exercises">Exercises</a>
+            <Link to='/' className="navbar__home">Home</Link>
+            <Link to='/' className="navbar__exercises">Exercises</Link>
         </div>
    </nav>
   )

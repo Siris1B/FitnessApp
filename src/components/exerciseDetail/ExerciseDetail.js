@@ -9,15 +9,16 @@ import useFitnessService from '../../service/FitnessService';
 const ExerciseDetail = () => {
   const [exerciseDetail, setExerciseDetail] = useState({});
   const [exerciseVideos, setExerciseVIdeos] = useState([]);
-  const {loading, error, getBodyParts, getExercises, getVideos, clearError} = useFitnessService();
+  const {loading, error, getExercises, getVideos, clearError} = useFitnessService();
   const {exerciseId} = useParams();
+  
 
   useEffect(() => {
     getExercises(`/exercise/${exerciseId}`)
       .then(setExerciseDetail);
 
-    getVideos(`/search?query=${exerciseDetail.name}`)
-      .then(setExerciseVIdeos);
+    // getVideos(`/search?query=${exerciseDetail.name}`)
+    //   .then((res) => setExerciseVIdeos(res.contents));
   }, [])
 
   return (

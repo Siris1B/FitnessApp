@@ -1,10 +1,12 @@
+import { Link } from 'react-router-dom';
+
 import './exercisesCard.scss';
 
 const ExercisesCard = (props) => { 
   const {bodyPart, target, name, gifUrl, id} = props.exercise
   return (
     <div className="exercisesCard">
-        <a href={id}
+        <Link to={`/exercise/${id}`} 
            className="exerciseCard__body"
         >
             <img src={gifUrl} 
@@ -25,8 +27,7 @@ const ExercisesCard = (props) => {
                     {name}
                 </div>
             </div>
-
-        </a>
+        </Link>
     </div>
   )
 }
