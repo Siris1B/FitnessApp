@@ -1,4 +1,4 @@
-.exerciseVideos {
+.similarTarget {
     margin-top: 45px;
     padding: 20px;
     &_title {
@@ -6,16 +6,12 @@
         text-transform: capitalize;
         font-size: 40px;
         font-weight: normal;
-        span {
-            color: #ff2625;
-        }
     }
     &_box {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
         align-items: center;
-        gap: 100px;
         h5, h6 {
             font-weight: 200;
             margin-top: 8px;
