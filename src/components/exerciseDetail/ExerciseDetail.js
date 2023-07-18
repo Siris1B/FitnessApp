@@ -4,13 +4,13 @@ import { useParams } from 'react-router-dom';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import Spinner from "../spinner/Spinner";
 import Detail from "../detail/Detail";
-import SimilarTarget from '../similarTarget/SimilarTarget';
+// import SimilarTarget from '../similarTarget/SimilarTarget';
 import ExerciseVideos from "../exerciseVideos/ExerciseVideos";
 import useFitnessService from '../../service/FitnessService';
 
 const ExerciseDetail = () => {
   const [exerciseDetail, setExerciseDetail] = useState({});
-  const [exercisesForCard, setExercisesForCard] = useState([]);
+  // const [exercisesForCard, setExercisesForCard] = useState([]);
   const [exerciseVideos, setExerciseVideos] = useState([]);
   const {loading, error, getExercises, getVideos, clearError} = useFitnessService();
   const {exerciseId} = useParams();
@@ -18,13 +18,15 @@ const ExerciseDetail = () => {
 
   useEffect(() => {
     getExercises(`/exercise/${exerciseId}`)
-      .then(setExerciseDetail)
+      .then(setExerciseDetail);
+
+    // getExercises(`/target/${exerciseDetail.target}`)
+    //   .then(res => setExercisesForCard(res));  
       
     getVideos(`/search?query=${exerciseDetail.name}`)
       .then((res) => setExerciseVideos(res.contents));
 
-    getExercises(`/target/${exerciseDetail.target}`)
-      .then(setExercisesForCard);
+    
   }, [])
 
   const errorMessage = error ? <ErrorMessage/> : null;
@@ -37,10 +39,11 @@ const ExerciseDetail = () => {
                         loading={loading}
                         error={error}
         />
-        <SimilarTarget  name={exerciseDetail.target} 
+        {/* <SimilarTarget  target={exerciseDetail.target} 
                         loading={loading}
                         error={error}
-                        exercisesForCard={exercisesForCard}/>
+                        exercisesForCard={exercisesForCard}
+        /> */}
     </>
   )
 
