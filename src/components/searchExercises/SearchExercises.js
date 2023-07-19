@@ -2,14 +2,11 @@ import { useState, useEffect } from 'react';
 
 import useFitnessService from '../../service/FitnessService';
 import HorisontalScrollBar from '../horisontalScrollBar/HorisontalScrollBar';
-import ErrorMessage from '../errorMessage/ErrorMessage';
-import Spinner from '../spinner/Spinner';
 
 import './searchExercises.scss';
 
-const SearchExercises = (props) => {
-  const {bodyPart, setBodyPart, setExercises} = props;
-  const {loading, error, getBodyParts, getExercises} = useFitnessService();
+const SearchExercises = ({bodyPart, setBodyPart, setExercises, setNewExercisesLoading, setNewExercisesError}) => {
+  const {getBodyParts, getExercises} = useFitnessService();
   const [bodyParts, setBodyParts] = useState([]);
   const [searchValue, setSearchValue] = useState('');
 
@@ -22,17 +19,22 @@ const SearchExercises = (props) => {
   }, [])
 
   const onRequest = async () => {
-    const result = await getExercises()
-
-    const searchedExercises = result.filter((exercise) => {
-      return exercise.bodyPart.toLowerCase().includes(searchValue) ||
-             exercise.target.toLowerCase().includes(searchValue) ||  
-             exercise.name.toLowerCase().includes(searchValue) ||
-             exercise.equipment.toLowerCase().includes(searchValue);
-    });
-
-    setExercises(searchedExercises);
+    setNewExercisesError(false)
+    setNewExercisesLoading(true);
+     try {
+      const result = await getExercises()
+      const searchedExercises = result.filter((exercise) => {
+        return exercise.bodyPart.toLowerCase().includes(searchValue) ||
+               exercise.target.toLowerCase().includes(searchValue) ||  
+               exercise.name.toLowerCase().includes(searchValue) ||
+               exercise.equipment.toLowerCase().includes(searchValue);
+      });
+      setExercises(searchedExercises);
+     } catch(e) {
+      setNewExercisesError(true);
+     }
     setSearchValue('');
+    setNewExercisesLoading(false);
   }
 
   const onValueChange = (text) => {
@@ -60,7 +62,7 @@ const SearchExercises = (props) => {
             </button>
         </div>
         {
-          loading ? <Spinner/> : <HorisontalScrollBar bodyPart={bodyPart}
+          <HorisontalScrollBar bodyPart={bodyPart}
                                bodyParts={bodyParts}
                                setBodyPart={setBodyPart} />
         }

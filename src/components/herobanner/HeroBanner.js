@@ -13,9 +13,14 @@ const HeroBanner = () => {
         <p className="herobanner__callToAction">
             Check out the most effective exercises <br/> for your body
         </p>
-        <a href="#" className="herobanner__button button">
+        <div
+           className="herobanner__button button"
+           onClick={() => window.scroll({
+                                        top: 1910,
+                                        behavior: "smooth"
+                                    })}>
             Explore Exercises
-        </a>
+        </div>
         <img src={HeroBannerImage} alt="hero-banner" className='herobanner__img' />
         <p className='herobanner__p-last'>
               Exercise

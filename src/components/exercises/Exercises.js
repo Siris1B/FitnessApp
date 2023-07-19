@@ -7,7 +7,7 @@ import Spinner from "../spinner/Spinner";
 
 import './exercises.scss';
 
-const Exercises = ({exercises, bodyPart, setExercises}) => {
+const Exercises = ({exercises, bodyPart, setExercises, newExercusesLoading, newExercisesError}) => {
   const {loading, error, getExercises} = useFitnessService();
 
   useEffect(() => {
@@ -17,15 +17,16 @@ const Exercises = ({exercises, bodyPart, setExercises}) => {
     }
   }, [bodyPart])
 
-  const content = exercises.map((exercise) => {
-    return <ExercisesCard key={exercise.id} exercise={exercise}/>
-  })
 
-  const errorMessage = error ? <ErrorMessage/> : null;
-  const spinner = loading ? <Spinner/> : null;
+
+  const errorMessage = (error || newExercisesError) ? <ErrorMessage/> : null;
+  const spinner = (loading || newExercusesLoading) ? <Spinner/> : null;
+  const content = !(loading || newExercusesLoading || errorMessage) ? exercises.map((exercise) => {
+    return <ExercisesCard key={exercise.id} exercise={exercise}/>
+  }) : null;
 
     return (
-    <div className="exercises">
+    <div className="exercises" id='exercises'>
         <p className="exercises__results">
             Showing Results
         </p>
