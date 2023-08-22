@@ -1,46 +1,40 @@
 import { useState, useEffect } from 'react';
-
 import useFitnessService from '../../service/FitnessService';
+import { useDispatch, useSelector } from 'react-redux';
+
+import {exercisesFetching, exercisesFetched, exercisesFetchingError, bodyPartsFetching, bodyPartsFetched, bodyPartsFetchingError, newValueSubmitted} from '../../actions'
+
 import HorisontalScrollBar from '../horisontalScrollBar/HorisontalScrollBar';
 
 import './searchExercises.scss';
 
-const SearchExercises = ({bodyPart, setBodyPart, setExercises, setNewExercisesLoading, setNewExercisesError}) => {
+const SearchExercises = () => {
   const {getBodyParts, getExercises} = useFitnessService();
-  const [bodyParts, setBodyParts] = useState([]);
+  const dispatch = useDispatch();
+  const {bodyParts} = useSelector(state => state)
   const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
+    dispatch(bodyPartsFetching());
     getBodyParts()
-      .then(setBodyParts)
-    
-    getExercises()
-      .then(setExercises)
+      .then(data => dispatch(bodyPartsFetched(data)))
+      .catch(() => dispatch(bodyPartsFetchingError()))
+
+      dispatch(exercisesFetching())
+        getExercises()
+          .then(data => dispatch(exercisesFetched(data)))
+          .catch(() => dispatch(exercisesFetchingError()))
+    // eslint-disable-next-line
   }, [])
 
   const onRequest = async () => {
-    setNewExercisesError(false)
-    setNewExercisesLoading(true);
-     try {
-      const result = await getExercises()
-      const searchedExercises = result.filter((exercise) => {
-        return exercise.bodyPart.toLowerCase().includes(searchValue) ||
-               exercise.target.toLowerCase().includes(searchValue) ||  
-               exercise.name.toLowerCase().includes(searchValue) ||
-               exercise.equipment.toLowerCase().includes(searchValue);
-      });
-      setExercises(searchedExercises);
-     } catch(e) {
-      setNewExercisesError(true);
-     }
+    dispatch(newValueSubmitted(searchValue));
     setSearchValue('');
-    setNewExercisesLoading(false);
   }
 
   const onValueChange = (text) => {
     setSearchValue(text)
   }
-
 
   return (
     <div className="searchExercises">
@@ -62,9 +56,7 @@ const SearchExercises = ({bodyPart, setBodyPart, setExercises, setNewExercisesLo
             </button>
         </div>
         {
-          <HorisontalScrollBar bodyPart={bodyPart}
-                               bodyParts={bodyParts}
-                               setBodyPart={setBodyPart} />
+          <HorisontalScrollBar bodyParts={bodyParts}/>
         }
     </div>
 

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 
 import ExercisesCard from "../exercisesCard/ExercisesCard";
 import useFitnessService from "../../service/FitnessService";
@@ -7,23 +7,14 @@ import Spinner from "../spinner/Spinner";
 
 import './exercises.scss';
 
-const Exercises = ({exercises, bodyPart, setExercises, newExercusesLoading, newExercisesError}) => {
-  const {loading, error, getExercises} = useFitnessService();
+const Exercises = () => {
+    const dispatch = useDispatch();
+    const {exercisesLoadingStatus ,filteredExercises} = useSelector(state => state)
 
-  useEffect(() => {
-    if (bodyPart != 'all') {
-      getExercises(`/bodyPart/${bodyPart}`)
-        .then(setExercises)
-    }
-  }, [bodyPart])
+    const content = exercisesLoadingStatus != 'idle' ? 'wait' : filteredExercises.map((exercise) => {
+      return <ExercisesCard key={exercise.id} exercise={exercise}/>
+    })
 
-
-
-  const errorMessage = (error || newExercisesError) ? <ErrorMessage/> : null;
-  const spinner = (loading || newExercusesLoading) ? <Spinner/> : null;
-  const content = !(loading || newExercusesLoading || errorMessage) ? exercises.map((exercise) => {
-    return <ExercisesCard key={exercise.id} exercise={exercise}/>
-  }) : null;
 
     return (
     <div className="exercises" id='exercises'>
@@ -31,7 +22,7 @@ const Exercises = ({exercises, bodyPart, setExercises, newExercusesLoading, newE
             Showing Results
         </p>
         <div className="exercises__container">
-            {errorMessage || spinner || content}
+            {content}
         </div>
     </div>
   )

@@ -5,8 +5,17 @@ import left from '../../resources/icons/leftArrow.png';
 import right from '../../resources/icons/rightArrow.png';
 
 
-const Pagination = ({totalExercises, currentPage, setCurrentPage, exercisesPerPage, exercises}) => {
+const Pagination = ({exercises, totalExercises, setCurrentExercises}) => {
   
+    const [currentPage, setCurrentPage] = useState(1);
+    const [exercisesPerPage, setExercisesPerPage] = useState(9);
+
+    const lastExerciseIndex = currentPage * exercisesPerPage; 
+    const firstExerciseIndex = lastExerciseIndex - exercisesPerPage; 
+    const currentExercises = exercises.slice(firstExerciseIndex, lastExerciseIndex);
+    
+    setCurrentExercises(currentExercises)
+
     useEffect(() => {setCurrentPage(1)}, [exercises]) //
     
     let pages = [];
